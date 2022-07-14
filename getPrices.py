@@ -37,17 +37,10 @@ import pandas as pd
 ]
 '''
 
-tickers=[
-'EUR.AX',
-'SMI.AX',
-'1@1',
-'ASN.AX'
-]
-
 
 def ETL(tickers):
 
-    data=pd.DataFrame
+    data=pd.DataFrame()
 
     CurYear=date.today().year
     CurMth=date.today().month
@@ -75,6 +68,13 @@ def ETL(tickers):
         except Exception:
             None
         
-    return pd.read_csv(stock)
+    return data.head()
+
+tickers=[
+'EUR.AX',
+'SMI.AX',
+'1@1',
+'ASN.AX'
+]
 
 ETL(tickers)
