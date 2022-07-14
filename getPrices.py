@@ -42,39 +42,30 @@ def ETL(tickers):
 
     data=pd.DataFrame()
 
+    PrevYear=CurYear=date.today().year-1
     CurYear=date.today().year
     CurMth=date.today().month
     CurDate=date.today().day
     CurHour=datetime.now().hour
     CurMin=datetime.now().minute
 
-    period1=int(time.mktime(datetime(CurYear,CurMth,CurDate,CurHour,CurMin).timetuple()))
+    period1=int(time.mktime(datetime(PrevYear,CurMth,CurDate,CurHour,CurMin).timetuple()))
     period2=int(time.mktime(datetime(CurYear,CurMth,CurDate,CurHour,CurMin).timetuple()))
 
+    xlwriter=pd.ExcelWriter('Model(3DMACDverJul22)PU.xlsx', engine='openpyxl')
+
     for i in tickers:
-        
-        
-        try:
-            stock=[]
-            stock=YahooWebQuery=f"https://query1.finance.yahoo.com/v7/finance/download/{i}?period1={period1}&period2={period2}&interval=1d&events=history&includeAdjustedClose=True"
+        stock=YahooWebQuery=f"https://query1.finance.yahoo.com/v7/finance/download/{i}?period1={period1}&period2={period2}&interval=1d&events=history&includeAdjustedClose=True"
+        df=pd.read_csv(stock)
+        df = df.iloc[: , :-2]
+        df.to_excel(xlwriter, sheet_name=i[0:3],startrow=7,startcol=2)
+        print(df)
 
-            if len(stock)==0:
-                None
-
-            else:
-                stock['Name']=i
-                data=data.append(stock, sort=False)
-
-        except Exception:
-            None
-        
-    return data.head()
+ 
 
 tickers=[
-'EUR.AX',
-'SMI.AX',
-'1@1',
-'ASN.AX'
+'SRN.AX'
 ]
+
 
 ETL(tickers)

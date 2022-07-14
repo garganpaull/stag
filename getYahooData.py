@@ -31,4 +31,4 @@ def ETL(ticker):
     df.to_excel()
     print(df)
 
-ETL()
+ETL(ticker)
