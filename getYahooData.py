@@ -26,10 +26,9 @@ def ETL(ticker):
     print(period2)
 
     YahooWebQuery=f"https://query1.finance.yahoo.com/v7/finance/download/{ticker}?period1={period1}&period2={period2}&interval=1d&events=history&includeAdjustedClose=True"
-          
-    print(YahooWebQuery)
-    print('https://query1.finance.yahoo.com/v7/finance/download/BOT.AX?period1=1626177821&period2=1657713821&interval=1d&events=history&includeAdjustedClose=true')
+       
     df=pd.read_csv(YahooWebQuery)
+    df.to_excel()
     print(df)
 
 ETL()
