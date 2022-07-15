@@ -2,45 +2,16 @@ import time
 import datetime
 from datetime import date, datetime
 import pandas as pd
+import xlwings as xw
 
-'''tickers=[
-'EUR.AX',
-'SMI.AX',
-'ASN.AX',
-'LMG.AX',
-'TNG.AX',
-'CAE.AX',
-'EQR.AX',
-'LRS.AX',
-'LIN.AX',
-'SRN.AX',
-'CXM.AX',
-'MNB.AX',
-'TMT.AX',
-'AGY.AX',
-'ARR.AX',
-'WIN.AX',
-'ATC.AX',
-'AUC.AX',
-'STM.AX',
-'ZNC.AX',
-'ARU.AX',
-'RED.AX',
-'TTM.AX',
-'AR1.AX',
-'RNU.AX',
-'AJL.AX',
-'QGL.AX',
-'AGE.AX',
-'CKA.AX',
-'TIG.AX',
-]
-'''
 
 
 def ETL(tickers):
 
     data=pd.DataFrame()
+
+   
+    
 
     PrevYear=CurYear=date.today().year-1
     CurYear=date.today().year
@@ -52,16 +23,31 @@ def ETL(tickers):
     period1=int(time.mktime(datetime(PrevYear,CurMth,CurDate,CurHour,CurMin).timetuple()))
     period2=int(time.mktime(datetime(CurYear,CurMth,CurDate,CurHour,CurMin).timetuple()))
 
-    xlwriter=pd.ExcelWriter('Model(3DMACDverJul22)PU.xlsx', engine='openpyxl')
-
+    
     for i in tickers:
         stock=YahooWebQuery=f"https://query1.finance.yahoo.com/v7/finance/download/{i}?period1={period1}&period2={period2}&interval=1d&events=history&includeAdjustedClose=True"
         df=pd.read_csv(stock)
         df = df.iloc[: , :-2]
-        df.to_excel(xlwriter, sheet_name=i[0:3],startrow=7,startcol=2)
-        print(df)
+        df.sort_values(by=['Date'])
+          
+        #load workbook
+        app = xw.App(visible=False)
+        wb = xw.Book('C:\Python FMO\stag\MACD3D_mini.xlsx') 
+        ws = wb.sheets('SRN')
 
- 
+        #Update workbook at specified range
+        ws.range('B7').options(index=False).value = df
+        wb.save()
+
+    #Close workbook
+
+    wb.close()
+    app.quit()
+        
+
+    print(df)
+
+
 
 tickers=[
 'SRN.AX'
