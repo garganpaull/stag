@@ -2,9 +2,9 @@ import tickers, workbook,PriceUpdater
 
 try:
 
-    file=workbook.getFile()
+    file=workbook.getModelFile()
     tickers=tickers.getTickers(file)
-    PriceUpdater.ETL(tickers,file)
+    PriceUpdater.updatePrices(tickers,file)
     print ('Price Update Complete')
 except:
     print('An error occured')

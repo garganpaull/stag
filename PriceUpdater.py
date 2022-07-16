@@ -6,7 +6,7 @@ import xlwings as xw
 
 
 
-def ETL(tickers: list, file: str):
+def updatePrices(tickers: list, file: str):
 
     
 
@@ -43,4 +43,4 @@ def ETL(tickers: list, file: str):
 
     
 
-#ETL(tickers,file)
+#updatePrices(tickers,file)
