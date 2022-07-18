@@ -1,10 +1,10 @@
-#import universe
-#run priceupdater to model worksheet
+#import universe (DONE)
+#run priceupdater to model worksheet (DONE)
 #if good, copy model to new worksheet
 #save new spreadheet 
 from csv import reader
 import tickers, PriceUpdater
-from workbook import getUniverseFile
+from workbook import getTestModelFile, getTestUniverseFile, getUniverseFile
 
 #get list of tickers in our universe
 def loaduniverse(file):
@@ -13,18 +13,19 @@ def loaduniverse(file):
         csv_data=list(csv_reader)
         tickers=[]
         for i in csv_data:
-            tickers.append(i)
+            tickers.append(i[0])
         return tickers
 
 
-#enter tickers into model tosee which ones meet our KPI
-def model():
-    universe=getUniverseFile()
-    tickers=loaduniverse(universe)
-    
-    for i in tickers:
-        print (i[0])
-    
-model()
+#enter tickers into model to see which ones meet our KPI
+def model(universefile,modelfile):
+
+    tickers=loaduniverse(universefile)
+
+    PriceUpdater.updatePrices(tickers,modelfile, modelUpdate=True)
+
+    return None
+
+#model()
 
 

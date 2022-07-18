@@ -1,24 +1,47 @@
 import os
 
+'''PRODUCTION METHODS'''
+
+prodpath=r"C:\Users\plemp\Dropbox\Stag Capital"
+testpath=r"C:\Users\plemp\Dropbox\Stag Capital\TEST FILES"
 
 def getModelFile():
+    '''PRODUCTION FILES'''
+    '''Both Price Updates and Model Updates will be made to this spreadsheet'''
+    path = prodpath
+    file="Model(3DMACDverJul22)_LIVE.xlsx"
 
-    path = r"C:\Users\plemp\Dropbox\Stag Capital"
-    #file="Model(3DMACDverJul22)_LIVE.xlsx"
-    file="Model(3DMACDverJul22)_PyTemp.xlsx"
-    
-    # Join various path components
-    
     return(os.path.join(path, file))
-
 
 
 def getUniverseFile():
 
-    path = r"C:\Users\plemp\Dropbox\Stag Capital"
+    path = prodpath
     file="SecUniverse.csv"
-    
-    # Join various path components
     
     return(os.path.join(path, file))
 
+'''TEST METHODS'''
+
+def getTestPriceUpdaterlFile():
+       
+    '''TEST FILES'''
+    path = testpath
+    file="Model(3DMACDverJul22)_TEST_PRICEUPDATER.xlsx"
+    
+    return(os.path.join(path, file))
+    
+def getTestModelFile():
+       
+    '''TEST FILES'''
+    path = testpath
+    file="Model(3DMACDverJul22)_TEST_MODELUPDATE.xlsx"
+
+    return(os.path.join(path, file))
+
+def getTestUniverseFile():
+
+    path = testpath
+    file="SecUniverse_TEST_MODELUPDATE.csv"
+
+    return(os.path.join(path, file))

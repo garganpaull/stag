@@ -1,3 +1,4 @@
+import workbook
 import xlwings as xw
 
 
@@ -20,7 +21,7 @@ def getTickers(file: str):
     #print(exchTickers)
     return (exchTickers)
 
-#getTickers(workbook.getFile())
+#getTickers(workbook.getTestPriceUpdaterlFile())
 
         
             

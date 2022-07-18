@@ -3,12 +3,10 @@ import datetime
 from datetime import date, datetime
 import pandas as pd
 import xlwings as xw
+from typing import Optional
 
 
-
-def updatePrices(tickers: list, file: str):
-
-    
+def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
 
     PrevYear=CurYear=date.today().year-1
     CurYear=date.today().year
@@ -21,8 +19,10 @@ def updatePrices(tickers: list, file: str):
     period2=int(time.mktime(datetime(CurYear,CurMth,CurDate,CurHour,CurMin).timetuple()))
 
     with xw.App(visible=False) as app:
-        
+        #Load Excel Workbook
         wb = xw.Book(file) 
+        
+        #grab data from Yahoo Finance per ticker
         
         for i in tickers:
             stock=YahooWebQuery=f"https://query1.finance.yahoo.com/v7/finance/download/{i}?period1={period1}&period2={period2}&interval=1d&events=history&includeAdjustedClose=True"
@@ -31,14 +31,18 @@ def updatePrices(tickers: list, file: str):
             df = df.iloc[: , :-2]#remove last two columns of pricing data from YF
             df.sort_values(by=['Date'])
             
-            #load workbook
-            sheet=i[0:3]
+            #select MODEL worksheet if doing a Model Update. If doing a Price Udpate, then select the worksheet of the ticker being updated.
+            if modelUpdate==True:
+                sheet='MODEL'
+            else:
+                sheet=i[0:3]#remove .AX from ticker as that is the sheet name.
+            
             ws = wb.sheets(sheet)
 
             #Update workbook at specified range
             ws.range('B7').options(index=False, header=False).value = df
             wb.save()
-
+        
     #print(df)
 
     

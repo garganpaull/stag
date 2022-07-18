@@ -1,12 +1,43 @@
-import tickers, workbook,PriceUpdater
+import tickers, workbook,PriceUpdater, updateModel
 
-try:
+'''PRODUCTION METHODS'''
+def RunPriceUpdate():
 
+    
     file=workbook.getModelFile()
-    tickers=tickers.getTickers(file)
-    PriceUpdater.updatePrices(tickers,file)
+    
+    seclist=tickers.getTickers(file)
+    PriceUpdater.updatePrices(seclist,file)
     print ('Price Update Complete')
-except:
-    print('An error occured')
 
 
+
+def RunModelUpdate():
+
+    pass
+
+'''TEST METHODS'''
+def RunPriceUpdateTEST():
+    
+    file=workbook.getTestPriceUpdaterlFile()
+    
+    seclist=tickers.getTickers(file)
+    PriceUpdater.updatePrices(seclist,file)
+    print ('Price Update Complete')
+
+
+
+def RunModelUpdateTEST():
+    universefile=workbook.getTestUniverseFile()
+    modelfile=workbook.getTestModelFile()
+    
+    updateModel.model(universefile, modelfile)
+    print ('Model Update Complete')
+
+'''COMMAND'''
+
+#RunPriceUpdate()
+#RunPriceUpdateTEST()
+
+#RunModelUpdate()
+RunModelUpdateTEST()
