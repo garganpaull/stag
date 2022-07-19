@@ -21,19 +21,28 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
 
     with xw.App(visible=False) as app:
         #Load Excel Workbook
-        wb = xw.Book(file) 
+        wb = xw.Book(file)
+        sheets=wb.sheets
+        curr_sheets=[]
+        for i in sheets:
+            curr_sheets.append(i.name)
         
         #grab data from Yahoo Finance per ticker
         
         for i in tickers:
-            stock=YahooWebQuery=f"https://query1.finance.yahoo.com/v7/finance/download/{i}?period1={period1}&period2={period2}&interval=1d&events=history&includeAdjustedClose=True"
-            df=pd.read_csv(stock)
-            #print(df)
-            df = df.iloc[: , :-2]#remove last two columns of pricing data from YF
-            df.sort_values(by=['Date'])
-            
+            if modelUpdate==True and i[0:3] in curr_sheets :
+                continue
+            else:
+                stock=YahooWebQuery=f"https://query1.finance.yahoo.com/v7/finance/download/{i}?period1={period1}&period2={period2}&interval=1d&events=history&includeAdjustedClose=True"
+                df=pd.read_csv(stock)
+                #print(df)
+                df = df.iloc[: , :-2]#remove last two columns of pricing data from YF
+                df.sort_values(by=['Date'])
+                
             #select MODEL worksheet if doing a Model Update. If doing a Price Udpate, then select the worksheet of the ticker being updated.
             #DO THIS IF MODEL UPDATE
+
+            #Load ticker data into Model
             if modelUpdate==True:
                 sheet='MODEL'
                 ws = wb.sheets(sheet)    
@@ -41,13 +50,25 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
                 winTotalCount=ws.range('D2').value
                 lossTotalCount=ws.range('E2').value
                 totalTrades=winTotalCount+lossTotalCount
-                winTotalAmt=ws.range('D3').value
-                lossTotalAmt=ws.range('E3').value
-                totalPnL=winTotalAmt+lossTotalAmt
+                winTotalAmt=float(ws.range('D3').value)
+                lossTotalAmt=float(ws.range('E3').value)
+                Return=float(ws.range('G3').value)
+                totalPnL=float(winTotalAmt+lossTotalAmt)
                 avgWinPerTrade=winTotalAmt/winTotalCount
-
-                #print(winTotal)
                 
+                #Check if ticker satisifies model investment criteria
+                if Return>0.3:
+                    wb.sheets.add(i[0:3])
+                    ws.range('A1:AG668').copy(wb.sheets[i[0:3]].range('A1:AG668'))
+                
+                      #Need to enter ticker into Signal Worksheet
+                    '''SRC:  https://www.excell-en.com/blog/2019/7/9/python-code-to-find-next-empty-row-in-excel'''
+                    ws_signal = wb.sheets('SIGNALS')
+                    CellID =ws_signal.range('A' + str(ws_signal.cells.last_cell.row)).end('up').row + 1
+                    CellRef = 'A' + str(CellID)
+                    ws_signal.range(CellRef).value=i[0:3]
+                    
+
             
             #DO THIS IF PRICE UPDATE
             else:
@@ -56,7 +77,10 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
                 #Update workbook at specified range
                 ws.range('B7:F400').clear()#clear existing data so no old data remains after update as can happen
                 ws.range('B7').options(index=False, header=False).value = df
-            
+                
+                
+               
+
                                      
             wb.save()
         
