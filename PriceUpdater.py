@@ -6,6 +6,7 @@ import xlwings as xw
 from typing import Optional
 
 
+
 def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
 
     PrevYear=CurYear=date.today().year-1
@@ -32,18 +33,36 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
             df.sort_values(by=['Date'])
             
             #select MODEL worksheet if doing a Model Update. If doing a Price Udpate, then select the worksheet of the ticker being updated.
+            #DO THIS IF MODEL UPDATE
             if modelUpdate==True:
                 sheet='MODEL'
+                ws = wb.sheets(sheet)    
+                ws.range('B7').options(index=False, header=False).value = df
+                winTotalCount=ws.range('D2').value
+                lossTotalCount=ws.range('E2').value
+                totalTrades=winTotalCount+lossTotalCount
+                winTotalAmt=ws.range('D3').value
+                lossTotalAmt=ws.range('E3').value
+                totalPnL=winTotalAmt+lossTotalAmt
+                avgWinPerTrade=winTotalAmt/winTotalCount
+
+                #print(winTotal)
+                
+            
+            #DO THIS IF PRICE UPDATE
             else:
                 sheet=i[0:3]#remove .AX from ticker as that is the sheet name.
+                ws = wb.sheets(sheet)
+                #Update workbook at specified range
+                ws.range('B7:F400').clear()#clear existing data so no old data remains after update as can happen
+                ws.range('B7').options(index=False, header=False).value = df
             
-            ws = wb.sheets(sheet)
-
-            #Update workbook at specified range
-            ws.range('B7').options(index=False, header=False).value = df
+                                     
             wb.save()
         
-    #print(df)
+    return None
+
+    
 
     
 
