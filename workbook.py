@@ -9,7 +9,7 @@ def getModelFile():
     '''PRODUCTION FILES'''
     '''Both Price Updates and Model Updates will be made to this spreadsheet'''
     path = prodpath
-    file="Model(3DMACDverJul22)_LIVE.xlsx"
+    file="Model(3DMACDverJul22)_LIVE.xlsm"
 
     return(os.path.join(path, file))
 

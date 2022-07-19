@@ -54,7 +54,7 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
                 lossTotalAmt=float(ws.range('E3').value)
                 Return=float(ws.range('G3').value)
                 totalPnL=float(winTotalAmt+lossTotalAmt)
-                avgWinPerTrade=winTotalAmt/winTotalCount
+                #avgWinPerTrade=winTotalAmt/winTotalCount
                 
                 #Check if ticker satisifies model investment criteria
                 if Return>0.3:
@@ -62,9 +62,7 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
                     active_sheet= wb.sheets[i[0:3]]
                     ws.range('A1:AG668').copy(wb.sheets[i[0:3]].range('A1:AG668'))
                     active_sheet.autofit(axis="columns")
-                    active_sheet.SplitColumn = 7
-                    active_sheet.SplitRow = 6
-                    active_sheet.FreezePanes = True
+                   
                       #Need to enter ticker into Signal Worksheet
                     '''SRC:  https://www.excell-en.com/blog/2019/7/9/python-code-to-find-next-empty-row-in-excel'''
                     ws_signal = wb.sheets('SIGNALS')

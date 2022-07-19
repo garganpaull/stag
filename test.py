@@ -10,6 +10,6 @@ for i in tickers:
 ws.autofit(axis="columns")
 ws.SplitColumn = 1
 ws.SplitRow = 1
-ws.FreezePanes = True
+ws.FreezePanes=True
     
 #wb.save()

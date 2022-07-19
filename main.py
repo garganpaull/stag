@@ -14,7 +14,11 @@ def RunPriceUpdate():
 
 def RunModelUpdate():
 
-    pass
+    universefile=workbook.getUniverseFile()
+    modelfile=workbook.getModelFile()
+    
+    updateModel.model(universefile, modelfile)
+    print ('Model Update Complete')
 
 '''TEST METHODS'''
 def RunPriceUpdateTEST():
@@ -36,8 +40,8 @@ def RunModelUpdateTEST():
 
 '''COMMAND'''
 
-#RunPriceUpdate()
+RunPriceUpdate()
 #RunPriceUpdateTEST()
 
 #RunModelUpdate()
-RunModelUpdateTEST()
+#RunModelUpdateTEST()
