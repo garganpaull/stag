@@ -60,7 +60,7 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
                 if Return>0.3:
                     wb.sheets.add(i[0:3])
                     ws.range('A1:AG668').copy(wb.sheets[i[0:3]].range('A1:AG668'))
-                
+                    wb.sheets[i[0:3]].autofit(axis="columns")
                       #Need to enter ticker into Signal Worksheet
                     '''SRC:  https://www.excell-en.com/blog/2019/7/9/python-code-to-find-next-empty-row-in-excel'''
                     ws_signal = wb.sheets('SIGNALS')

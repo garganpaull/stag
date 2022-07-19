@@ -7,5 +7,6 @@ for i in tickers:
     X =ws.range('A' + str(ws.cells.last_cell.row)).end('up').row + 1
     cell = 'A' + str(X)
     ws.range(cell).value=i
+ws.autofit(axis="columns")
     
-wb.save()
+#wb.save()
