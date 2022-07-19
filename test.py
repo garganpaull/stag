@@ -8,5 +8,8 @@ for i in tickers:
     cell = 'A' + str(X)
     ws.range(cell).value=i
 ws.autofit(axis="columns")
+ws.SplitColumn = 1
+ws.SplitRow = 1
+ws.FreezePanes = True
     
 #wb.save()
