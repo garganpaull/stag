@@ -2,7 +2,7 @@ import workbook
 import xlwings as xw
 
 
-excludeSheets=['MODEL','SIGNALS','EXCLUSIONS','UNIVERSE','SETTINGS']
+excludeSheets=['0_SIGNALS','1_MODEL','4 EXCLUSIONS','UNIVERSE','3 SETTINGS']
 
 def getTickers(file: str):
 

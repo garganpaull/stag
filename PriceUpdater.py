@@ -33,12 +33,15 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
             if modelUpdate==True and i[0:3] in curr_sheets :
                 continue
             else:
-                stock=YahooWebQuery=f"https://query1.finance.yahoo.com/v7/finance/download/{i}?period1={period1}&period2={period2}&interval=1d&events=history&includeAdjustedClose=True"
-                df=pd.read_csv(stock)
-                #print(df)
-                df = df.iloc[: , :-2]#remove last two columns of pricing data from YF
-                df.sort_values(by=['Date'])
-                
+                try:
+                    stock=YahooWebQuery=f"https://query1.finance.yahoo.com/v7/finance/download/{i}?period1={period1}&period2={period2}&interval=1d&events=history&includeAdjustedClose=True"
+                    df=pd.read_csv(stock)
+                    #print(df)
+                    df = df.iloc[: , :-2]#remove last two columns of pricing data from YF
+                    df.sort_values(by=['Date'])
+                except:
+                    print(f'Error sourcing prices for ticker {i}')
+
             #select MODEL worksheet if doing a Model Update. If doing a Price Udpate, then select the worksheet of the ticker being updated.
             #DO THIS IF MODEL UPDATE
 
