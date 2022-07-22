@@ -2,8 +2,8 @@ import os
 
 '''PRODUCTION METHODS'''
 
-prodpath=r"C:\Users\plemp\Dropbox\Stag Capital"
-testpath=r"C:\Users\plemp\Dropbox\Stag Capital\TEST FILES"
+prodpath=r"C:\Users\plemp\Dropbox\MACD3D"
+testpath=r"C:\Users\plemp\Dropbox\MACD3D\TEST FILES"
 
 def getModelFile():
     '''PRODUCTION FILES'''
