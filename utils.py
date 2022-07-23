@@ -14,7 +14,7 @@ def copyCols(tickers, file, cols):
         
         try:
             for i in tickers:
-                #copy cols from MODEL sheet
+                #copy cols from MODEL sheet and paste to each ticker sheet 
                 active_sheet= wb.sheets['1_MODEL']
                 active_sheet.range(cols).copy(wb.sheets[i[0:3]].range(cols))
                 active_sheet.autofit(axis="columns")
