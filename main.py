@@ -40,8 +40,8 @@ def RunModelUpdateTEST():
 
 '''COMMAND'''
 
-RunPriceUpdate()
+#RunPriceUpdate()
 #RunPriceUpdateTEST()
 
-#RunModelUpdate()
+RunModelUpdate()
 #RunModelUpdateTEST()

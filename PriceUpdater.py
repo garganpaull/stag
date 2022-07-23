@@ -47,7 +47,7 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
 
             #Load ticker data into Model
             if modelUpdate==True:
-                sheet='MODEL'
+                sheet='1_MODEL'
                 ws = wb.sheets(sheet)    
                 ws.range('B7').options(index=False, header=False).value = df
                 winTotalCount=ws.range('D2').value
@@ -68,10 +68,11 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
                    
                       #Need to enter ticker into Signal Worksheet
                     '''SRC:  https://www.excell-en.com/blog/2019/7/9/python-code-to-find-next-empty-row-in-excel'''
-                    ws_signal = wb.sheets('SIGNALS')
+                    ws_signal = wb.sheets('0_SIGNALS')
                     CellID =ws_signal.range('A' + str(ws_signal.cells.last_cell.row)).end('up').row + 1
                     CellRef = 'A' + str(CellID)
                     ws_signal.range(CellRef).value=i[0:3]
+                    print(f'MODEL CREATED: {i}')
                     
 
             
@@ -82,7 +83,7 @@ def updatePrices(tickers: list, file: str, modelUpdate:Optional[bool]=False):
                 #Update workbook at specified range
                 ws.range('B7:F400').clear()#clear existing data so no old data remains after update as can happen
                 ws.range('B7').options(index=False, header=False).value = df
-                
+                print(f'PRICE UPDATED: {i}')
                 
                
 
